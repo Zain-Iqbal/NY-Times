@@ -1,19 +1,18 @@
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 import {Routes, Route} from "react-router-dom";
 
-import DefaultLayout from "./shared-components/default-layout";
-import Home from "./screens/home";
-import TickerDetail from "./screens/detail";
 import {ROUTES} from "./routes";
+import DefaultLayout from './shared-components/default-layout';
 
+const Home = lazy(() => import("./screens/home"));
 
 function App() {
-    return (
-        <DefaultLayout>
-            <Routes>
-                <Route path={ROUTES.default} element={<Home/>}/>
-                <Route path={`${ROUTES.detail}/:id`} element={<TickerDetail/>}/>
-            </Routes>
+    return (<DefaultLayout>
+            <Suspense>
+                <Routes>
+                    <Route path={ROUTES.default} element={<Home/>}/>
+                </Routes>
+            </Suspense>
         </DefaultLayout>
     );
 }
